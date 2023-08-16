@@ -40,5 +40,37 @@ namespace SwapnilWebASP.Controllers
 			return View();
 
 		}
+		public IActionResult Edit(int? id)
+		{
+			if (id == null || id == 0)
+			{
+				return NotFound();
+			}
+			Category categorydb = _db.Categories.Find(id);
+			if (categorydb == null)
+			{
+				return NotFound();
+			}
+			return View(categorydb);
+		}
+		[HttpPost]
+		public IActionResult Edit(Category obj)
+		{
+			if (obj.Name == obj.DisplayOrder.ToString())
+			{
+				ModelState.AddModelError("name", "The DisplayOrder exacly cannot match the name.");
+			}
+			if (ModelState.IsValid)
+			{
+				_db.Categories.Add(obj);
+				_db.SaveChanges();
+				return RedirectToAction("Index");
+
+
+
+			}
+			return View();
+
+		}
 	}
 }
