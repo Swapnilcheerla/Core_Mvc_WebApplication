@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace SwapnilWebASP.Models
+namespace SwapnilAsp.Models
 {
 	public class Category
 	{

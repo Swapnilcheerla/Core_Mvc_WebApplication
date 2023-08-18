@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SwapnilWebASP.Data;
-using SwapnilWebASP.Models;
+using SwapnilAsp.DataAccess.Data;
+using SwapnilAsp.Models;
 
 namespace SwapnilWebASP.Controllers
 {

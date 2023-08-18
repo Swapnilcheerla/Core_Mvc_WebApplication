@@ -1,4 +1,4 @@
-namespace SwapnilWebASP.Models
+namespace SwapnilAsp.Models
 {
     public class ErrorViewModel
     {

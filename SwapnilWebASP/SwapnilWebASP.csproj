@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -24,6 +24,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SwapnilAsp.DataAccess\SwapnilAsp.DataAccess.csproj" />
+    <ProjectReference Include="..\SwapnilAsp.Models\SwapnilAsp.Models.csproj" />
+    <ProjectReference Include="..\SwapnilAsp.Utility\SwapnilAsp.Utility.csproj" />
   </ItemGroup>
 
 </Project>

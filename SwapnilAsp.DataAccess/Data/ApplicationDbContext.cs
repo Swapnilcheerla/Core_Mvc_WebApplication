@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SwapnilWebASP.Models;
+using SwapnilAsp.Models;
 
-namespace SwapnilWebASP.Data
+namespace SwapnilAsp.DataAccess.Data
 {
 	public class ApplicationDbContext : DbContext
 	{
