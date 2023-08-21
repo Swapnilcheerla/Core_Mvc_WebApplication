@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SwapnilAsp.DataAccess.Repository.IRepository;
 using SwapnilAsp.Models;
+using SwapnilAsp.Models.ViewModels;
 
 namespace SwapnilWebASP.Areas.Admin.Controllers
 {
@@ -16,22 +18,43 @@ namespace SwapnilWebASP.Areas.Admin.Controllers
 		public IActionResult Index()
 		{
 			List<Product> objProductList = _unitOfWork.Product.GetAll().ToList();
+
 			return View(objProductList);
 		}
-		public IActionResult Create()
+		public IActionResult Upsert(int? id)  //update and insert
 		{
-			return View();
+			//IEnumerable<SelectListItem> CategoryList =
+			//ViewBag.CategoryList = CategoryList;
+			//ViewData["CategoryList"] = CategoryList;
+			ProductVM productVM = new()
+			{
+				CategoryList = _unitOfWork.Category
+				.GetAll().Select(u => new SelectListItem
+				{
+					Text = u.Name,
+					Value = u.Id.ToString()
+				}),
+				Product = new Product()
+			};
+			if (id == null || id == 0)
+			{
+				return View(productVM);
+
+			}
+			else
+			{
+				productVM.Product = _unitOfWork.Product.Get(u => u.Id == id);
+				return View(productVM);
+			}
+
 		}
 		[HttpPost]
-		public IActionResult Create(Product obj)
+		public IActionResult Upsert(ProductVM productVM, IFormFile? file)
 		{
-			if (obj.Title == obj.Description)
-			{
-				ModelState.AddModelError("name", "The DisplayOrder exacly cannot match the name.");
-			}
+
 			if (ModelState.IsValid)
 			{
-				_unitOfWork.Product.Add(obj);
+				_unitOfWork.Product.Add(productVM.Product);
 				_unitOfWork.Save();
 				TempData["success"] = "Product created successfully";
 				return RedirectToAction("Index");
@@ -39,10 +62,26 @@ namespace SwapnilWebASP.Areas.Admin.Controllers
 
 
 			}
-			return View();
+			else
+			{
+				productVM.CategoryList = _unitOfWork.Category
+				.GetAll().Select(u => new SelectListItem
+				{
+					Text = u.Name,
+					Value = u.Id.ToString()
+				});
+				return View(productVM);
+
+			}
 
 		}
-		public IActionResult Edit(int? id)
+
+
+
+
+
+
+		public IActionResult Delete(int? id)
 		{
 			if (id == null || id == 0)
 			{
@@ -56,40 +95,6 @@ namespace SwapnilWebASP.Areas.Admin.Controllers
 				return NotFound();
 			}
 			return View(productdb);
-		}
-		[HttpPost]
-		public IActionResult Edit(Product obj)
-		{
-
-
-			if (ModelState.IsValid)
-			{
-				_unitOfWork.Product.Update(obj);
-				_unitOfWork.Save();
-				TempData["success"] = "Product updated successfully";
-				return RedirectToAction("Index");
-
-
-
-			}
-			return View();
-
-		}
-
-		public IActionResult Delete(int? id)
-		{
-			if (id == null || id == 0)
-			{
-				return NotFound();
-			}
-			Product? categorydb = _unitOfWork.Product.Get(u => u.Id == id);
-			//Category? categorydb1 = _db.Categories.FirstOrDefault(c => c.Id == id);
-			//Category? categorydb2 = _db.Categories.Where(c => c.Id == id).FirstOrDefault();
-			if (categorydb == null)
-			{
-				return NotFound();
-			}
-			return View(categorydb);
 		}
 		[HttpPost, ActionName("Delete")]
 		public IActionResult DeletePost(int? id)
