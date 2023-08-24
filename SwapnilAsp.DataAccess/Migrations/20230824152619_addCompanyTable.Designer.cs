@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SwapnilAsp.DataAccess.Data;
 
@@ -11,9 +12,11 @@ using SwapnilAsp.DataAccess.Data;
 namespace SwapnilAsp.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230824152619_addCompanyTable")]
+    partial class addCompanyTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -299,38 +302,6 @@ namespace SwapnilAsp.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Companies");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            City = "albany",
-                            Name = "Name",
-                            PhoneNumber = "5188982729",
-                            PostalCode = "12208",
-                            State = "Ny",
-                            StreetAddress = "adress"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            City = "2albany",
-                            Name = "2Name",
-                            PhoneNumber = "25188982729",
-                            PostalCode = "212208",
-                            State = "2Ny",
-                            StreetAddress = "2adress"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            City = "3albany",
-                            Name = "3Name",
-                            PhoneNumber = "35188982729",
-                            PostalCode = "312208",
-                            State = "3Ny",
-                            StreetAddress = "3adress"
-                        });
                 });
 
             modelBuilder.Entity("SwapnilAsp.Models.Product", b =>
@@ -476,9 +447,6 @@ namespace SwapnilAsp.DataAccess.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -491,8 +459,6 @@ namespace SwapnilAsp.DataAccess.Migrations
 
                     b.Property<string>("StreetAddress")
                         .HasColumnType("nvarchar(max)");
-
-                    b.HasIndex("CompanyId");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
@@ -557,17 +523,6 @@ namespace SwapnilAsp.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("SwapnilAsp.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("SwapnilAsp.Models.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Company");
                 });
 #pragma warning restore 612, 618
         }
