@@ -49,7 +49,7 @@ namespace SwapnilAsp.DataAccess.Data
 					Price50 = 85,
 					Price100 = 80,
 					CategoryId = 1,
-					ImageUrl = ""
+					ImageUrl = "\\images\\product\\2eae675b-326b-45b0-a6fa-4bb1222f71db.jpg"
 				},
 				new Product
 				{
@@ -62,8 +62,8 @@ namespace SwapnilAsp.DataAccess.Data
 					Price = 30,
 					Price50 = 25,
 					Price100 = 20,
-					CategoryId = 1,
-					ImageUrl = ""
+					CategoryId = 1
+
 				},
 				new Product
 				{
@@ -76,8 +76,8 @@ namespace SwapnilAsp.DataAccess.Data
 					Price = 50,
 					Price50 = 40,
 					Price100 = 35,
-					CategoryId = 2,
-					ImageUrl = ""
+					CategoryId = 2
+
 				},
 				new Product
 				{
@@ -90,8 +90,8 @@ namespace SwapnilAsp.DataAccess.Data
 					Price = 65,
 					Price50 = 60,
 					Price100 = 55,
-					CategoryId = 3,
-					ImageUrl = ""
+					CategoryId = 3
+
 				},
 				new Product
 				{
@@ -104,8 +104,7 @@ namespace SwapnilAsp.DataAccess.Data
 					Price = 27,
 					Price50 = 25,
 					Price100 = 20,
-					CategoryId = 1,
-					ImageUrl = ""
+					CategoryId = 1
 				},
 				new Product
 				{
@@ -118,8 +117,7 @@ namespace SwapnilAsp.DataAccess.Data
 					Price = 23,
 					Price50 = 22,
 					Price100 = 20,
-					CategoryId = 2,
-					ImageUrl = ""
+					CategoryId = 2
 				}
 				);
 			modelBuilder.Entity<Company>().HasData(
