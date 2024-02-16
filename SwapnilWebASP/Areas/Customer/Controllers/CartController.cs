@@ -123,7 +123,7 @@ namespace SwapnilWebASP.Areas.Customer.Controllers
 			{
 				//HttpContext.Session.SetInt32(SD.ssShoppingCartCount, 0);
 
-				var domain = "http://localhost:5131/";
+				var domain = Request.Scheme + "://" + Request.Host.Value + "/"; ;
 				var options = new Stripe.Checkout.SessionCreateOptions
 				{
 					SuccessUrl = domain + $"customer/cart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}",

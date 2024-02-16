@@ -124,7 +124,7 @@ namespace SwapnilWebASP.Areas.Admin.Controllers
 		{
 			OrderVM.OrderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == OrderVM.OrderHeader.Id, includeProperties: "ApplicationUser");
 			OrderVM.OrderDetails = _unitOfWork.OrderDetail.GetAll(o => o.OrderHeaderId == OrderVM.OrderHeader.Id, includeProperties: "Product");
-			var domain = "http://localhost:5131/";
+			var domain = Request.Scheme + "://" + Request.Host.Value + "/";
 			var options = new Stripe.Checkout.SessionCreateOptions
 			{
 				SuccessUrl = domain + $"admin/order/PaymentConfirmation?orderHeaderId={OrderVM.OrderHeader.Id}",
