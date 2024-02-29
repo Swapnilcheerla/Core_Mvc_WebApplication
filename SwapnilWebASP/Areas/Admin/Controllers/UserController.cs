@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SwapnilAsp.DataAccess.Repository.IRepository;
 using SwapnilAsp.Models;
+using SwapnilAsp.Models.ViewModels;
 using SwapnilAsp.Utility;
 
 namespace SwapnilWebASP.Areas.Admin.Controllers
@@ -24,7 +26,27 @@ namespace SwapnilWebASP.Areas.Admin.Controllers
         {
             return View();
         }
+        public IActionResult RoleManagment(string userId)
+        {
+            RoleManagementVM RoleVM = new RoleManagementVM()
+            {
+                ApplicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId, includeProperties: "Company"),
+                RoleList = _roleManager.Roles.Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Name
+                }),
+                CompanyList = _unitOfWork.Company.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+            };
 
+            RoleVM.ApplicationUser.Role = _userManager.GetRolesAsync(_unitOfWork.ApplicationUser.Get(u => u.Id == userId))
+                    .GetAwaiter().GetResult().FirstOrDefault();
+            return View(RoleVM);
+        }
 
 
         #region API CALLS
@@ -71,7 +93,7 @@ namespace SwapnilWebASP.Areas.Admin.Controllers
             {
                 objFromDb.LockoutEnd = DateTime.Now.AddYears(1000);
             }
-            //_unitOfWork.ApplicationUser.Update(objFromDb);
+            _unitOfWork.ApplicationUser.Update(objFromDb);
             _unitOfWork.Save();
             return Json(new { success = true, message = "Operation Successful" });
         }
