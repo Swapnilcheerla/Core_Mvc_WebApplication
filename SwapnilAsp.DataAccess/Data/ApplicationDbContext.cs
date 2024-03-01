@@ -18,7 +18,7 @@ namespace SwapnilAsp.DataAccess.Data
 
 		public DbSet<Company> Companies { get; set; }
 		public DbSet<ShoppingCart> ShoppingCarts { get; set; }
-
+		public DbSet<ProductImage> ProductImages { get; set; }
 		public DbSet<OrderDetail> OrderDetails { get; set; }
 		public DbSet<OrderHeader> OrderHeaders { get; set; }
 
@@ -48,8 +48,8 @@ namespace SwapnilAsp.DataAccess.Data
 					Price = 90,
 					Price50 = 85,
 					Price100 = 80,
-					CategoryId = 1,
-					ImageUrl = "\\images\\product\\2eae675b-326b-45b0-a6fa-4bb1222f71db.jpg"
+					CategoryId = 1
+				
 				},
 				new Product
 				{

@@ -33,9 +33,10 @@ namespace SwapnilWebASP.Areas.Customer.Controllers
 				OrderHeader = new()
 			};
 
-
+			IEnumerable<ProductImage> productImages = _unitOfWork.ProductImage.GetAll();
 			foreach (var cart in ShoppingCartVM.ShoppingCartList)
 			{
+				cart.Product.ProductImage = productImages.Where(u=>u.ProductId==cart.ProductId).ToList();
 				cart.Price = GetPricebasedOnQuality(cart);
 				ShoppingCartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
 
