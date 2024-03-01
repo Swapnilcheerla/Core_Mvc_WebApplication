@@ -47,11 +47,51 @@ namespace SwapnilWebASP.Areas.Admin.Controllers
                     .GetAwaiter().GetResult().FirstOrDefault();
             return View(RoleVM);
         }
+		[HttpPost]
+		public IActionResult RoleManagment(RoleManagementVM roleManagmentVM)
+		{
+
+			string oldRole = _userManager.GetRolesAsync(_unitOfWork.ApplicationUser.Get(u => u.Id == roleManagmentVM.ApplicationUser.Id))
+					.GetAwaiter().GetResult().FirstOrDefault();
+
+			ApplicationUser applicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == roleManagmentVM.ApplicationUser.Id);
 
 
-        #region API CALLS
+			if (!(roleManagmentVM.ApplicationUser.Role == oldRole))
+			{
+				//a role was updated
+				if (roleManagmentVM.ApplicationUser.Role == SD.Role_Company)
+				{
+					applicationUser.CompanyId = roleManagmentVM.ApplicationUser.CompanyId;
+				}
+				if (oldRole == SD.Role_Company)
+				{
+					applicationUser.CompanyId = null;
+				}
+				_unitOfWork.ApplicationUser.Update(applicationUser);
+				_unitOfWork.Save();
 
-        [HttpGet]
+				_userManager.RemoveFromRoleAsync(applicationUser, oldRole).GetAwaiter().GetResult();
+				_userManager.AddToRoleAsync(applicationUser, roleManagmentVM.ApplicationUser.Role).GetAwaiter().GetResult();
+
+			}
+			else
+			{
+				if (oldRole == SD.Role_Company && applicationUser.CompanyId != roleManagmentVM.ApplicationUser.CompanyId)
+				{
+					applicationUser.CompanyId = roleManagmentVM.ApplicationUser.CompanyId;
+					_unitOfWork.ApplicationUser.Update(applicationUser);
+					_unitOfWork.Save();
+				}
+			}
+
+			return RedirectToAction("Index");
+		}
+
+
+		#region API CALLS
+
+		[HttpGet]
         public IActionResult GetAll()
         {
             List<ApplicationUser> objUserList = _unitOfWork.ApplicationUser.GetAll(includeProperties: "Company").ToList();
