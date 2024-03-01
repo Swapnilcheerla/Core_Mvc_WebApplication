@@ -28,7 +28,7 @@ namespace SwapnilWebASP.Areas.Admin.Controllers
         }
         public IActionResult RoleManagment(string userId)
         {
-            RoleManagementVM RoleVM = new RoleManagementVM()
+            RoleManagmentVM RoleVM = new RoleManagmentVM()
             {
                 ApplicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId, includeProperties: "Company"),
                 RoleList = _roleManager.Roles.Select(i => new SelectListItem
@@ -48,7 +48,7 @@ namespace SwapnilWebASP.Areas.Admin.Controllers
             return View(RoleVM);
         }
 		[HttpPost]
-		public IActionResult RoleManagment(RoleManagementVM roleManagmentVM)
+		public IActionResult RoleManagment(RoleManagmentVM roleManagmentVM)
 		{
 
 			string oldRole = _userManager.GetRolesAsync(_unitOfWork.ApplicationUser.Get(u => u.Id == roleManagmentVM.ApplicationUser.Id))

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SwapnilAsp.Models.ViewModels
 {
-    public class RoleManagementVM
+    public class RoleManagmentVM
     {
         public ApplicationUser ApplicationUser { get; set; }
         public IEnumerable<SelectListItem> RoleList { get; set; }

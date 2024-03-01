@@ -12,8 +12,8 @@ using SwapnilAsp.DataAccess.Data;
 namespace SwapnilAsp.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240216170926_kdsdka")]
-    partial class kdsdka
+    [Migration("20240301153016_newdb_Initial")]
+    partial class newdb_Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -606,7 +606,6 @@ namespace SwapnilAsp.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CompanyId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -742,9 +741,7 @@ namespace SwapnilAsp.DataAccess.Migrations
                 {
                     b.HasOne("SwapnilAsp.Models.Company", "Company")
                         .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CompanyId");
 
                     b.Navigation("Company");
                 });
